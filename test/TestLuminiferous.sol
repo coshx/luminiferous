@@ -26,7 +26,7 @@ contract TestLuminiferous {
     Assert.equal(true, true, "True is true");
   }
 
-  // Fucking Solidity tests have no documentation so I can't figure out how to do anything...
+  // [Finnicky] Solidity tests have no documentation so I can't figure out how to do anything...
   // function testFundLumiBank() {
   //   lumibank.transfer(100);
   //   Assert.equal(lumibank.balance, 100, "Capital One deposited money into the Lumibank Contract");
