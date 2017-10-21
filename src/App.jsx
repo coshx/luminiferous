@@ -11,9 +11,13 @@ import getWeb3 from './utils/getWeb3';
 import './css/oswald.css';
 import './css/open-sans.css';
 import './css/pure-min.css';
+import './css/pure-grids-responsive-min.css';
+import './css/font-awesome.min.css';
 import './App.css';
+import './Nav.css';
 import Home from './Home';
 import Example from './Example';
+import Nav from './Nav';
 
 class App extends Component {
   constructor(props) {
@@ -84,28 +88,22 @@ class App extends Component {
   }
 
   render() {
-    const Nav = () => {
-      return (
-        <nav className="navbar pure-menu pure-menu-horizontal">
-          <Link to="/">Luminiferous</Link> {' '}
-          <Link to="/my-report">My Report</Link> {' '}
-          <Link to="/report/">Check Credit</Link> {' '}
-          <Link to="/example/">Test Truffle</Link>
-        </nav>
-      );
-    };
-
-
     return (
       <Router>
         <div className="App">
-          <Nav/>
-          <main className="container">
-            <Switch>
-              <Route path="/example" render={this.exampleWithState}/>
-              <Route path="/" component={Home}/>
-            </Switch>
-          </main>
+          <div className="pure-g">
+            <div className="pure-u-1-1 pure-u-md-1-5">
+              <Nav/>
+            </div>
+            <div className="pure-u-1 pure-u-md-4-5">
+              <main className="container">
+                <Switch>
+                  <Route path="/example" render={this.exampleWithState}/>
+                  <Route path="/" component={Home}/>
+                </Switch>
+              </main>
+            </div>
+          </div>
         </div>
       </Router>
     );
