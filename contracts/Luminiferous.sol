@@ -14,7 +14,8 @@ contract Luminiferous {
   uint created_at;
   uint interest_updated_at;
 
-  event OhNoHowDidItComeToThis(uint wat);
+  event borrowed(uint amount, uint timestamp);
+  event repayed(uint amount, uint timestamp);
 
   // Constructor
   function Luminiferous() {
@@ -88,12 +89,14 @@ contract Luminiferous {
   function request_credit(uint new_limit) onlysigned onlyborrower external {
     if(borrower_balance > new_limit){ return; } // can't set the credit limit below your current balance
     credit_request = new_limit;
-    lender.request_funds(new_limit - borrower_balance); // Ask CapitalOne for funds
+    uint credit_amount = new_limit - borrower_balance;
+    lender.request_funds(credit_amount); // Ask CapitalOne for funds
+
+    borrowed(credit_amount, block.timestamp);
   }
 
   // Lender calls this to deposit the funds. Can't deposit more than the borrower asked for.
   function accept_funds() payable external {
-    OhNoHowDidItComeToThis(msg.value);
     borrower_balance += msg.value; // funds are now available in the account
   }
 
@@ -114,8 +117,6 @@ contract Luminiferous {
   // Step 6. Borrower makes a payment on the loan. Note that because this is payable you can
   //         send money along with it, which will update `this.balance`.
   function repay(bool reset_limit) payable onlysigned onlyborrower external {
-    OhNoHowDidItComeToThis(this.balance);
-    OhNoHowDidItComeToThis(msg.value);
     uint repayment_amount = this.balance;
     if(repayment_amount > borrower_balance) {
       repayment_amount = borrower_balance; // can't pay back more than the balance due.
@@ -127,6 +128,7 @@ contract Luminiferous {
     if(reset_limit) {
       credit_request = borrower_balance;
     }
+    repayed(repayment_amount, block.timestamp);
   }
 
   // Step 7. Close the loan with a final payment (TODO)
