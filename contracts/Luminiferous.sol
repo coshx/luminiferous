@@ -24,7 +24,7 @@ contract Luminiferous {
     created_at = block.timestamp;
     interest_updated_at = block.timestamp;
     signed = false;
-    maximum_credit_limit = 10000000000000000000; // 100ETH
+    maximum_credit_limit = 30000000000000000000; // 30ETH
     borrower_balance = 0;
   }
 
