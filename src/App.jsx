@@ -21,6 +21,7 @@ import Offer from './Offer';
 import OfferList from './OfferList';
 import AcceptOffer from './AcceptOffer';
 import Approved from './Approved';
+import Header from './Header';
 
 class App extends Component {
   constructor(props) {
@@ -57,10 +58,8 @@ class App extends Component {
       <Router>
         <div className="App">
           <div className="pure-g">
-            <div className="pure-u-1-1 pure-u-md-1-5">
-              <Nav/>
-            </div>
-            <div className="pure-u-1 pure-u-md-4-5">
+            <div className="pure-u-1-1">
+              <Header/>
               <main className="container">
                 <Switch>
                   <Route path="/offers/:id/accept" component={this.AcceptOffer}/>
