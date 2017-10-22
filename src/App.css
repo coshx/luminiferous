@@ -16,12 +16,17 @@ code {
   background: #eee;
 }
 
-.pure-button-primary {
-  background-color: #0c1a2b;
+.pure-button.pure-button-primary {
+  color: #30363d;
+  background-color: #fff;
+  border: 1px solid #efefef;
+  border-radius: 3px;
 }
 
 .pure-button-primary:hover {
-  background-color: #233e5e;
+  background-color: #272e35;
+  border-radius: 3px;
+  color: #fff;
 }
 
 .pure-form input[type="text"]:focus {
