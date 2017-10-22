@@ -1,5 +1,4 @@
 module.exports = {
-  migrations_directory: "./migrations",
   networks: {
     development: {
       host: "localhost",

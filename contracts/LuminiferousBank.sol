@@ -1,7 +1,14 @@
 pragma solidity 0.4.15;
 
+contract AbstractLumi {
+  function accept_funds() payable external;
+}
+
 contract LuminiferousBank {
   uint created_at;
+  event OhShitShitShit(uint wat);
+
+  AbstractLumi lumi;
 
   // Constructor
   function LuminiferousBank() {
@@ -17,7 +24,9 @@ contract LuminiferousBank {
 
   function request_funds(uint _amount){
     // Here you would verify the contract.
-    msg.sender.transfer(_amount);
+    OhShitShitShit(_amount);
+    lumi = AbstractLumi(msg.sender);
+    lumi.accept_funds.value(_amount)();
   }
 
   function return_funds() payable returns (bool){
