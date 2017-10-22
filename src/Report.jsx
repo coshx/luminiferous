@@ -19,7 +19,7 @@ class Report extends LumiComponent {
 
   lumiInit() {
     this.updateBalance();
-    this.state.lumi.isSigned()
+    this.state.lumi.isSigned({from: this.state.account})
       .then( (err, signed) => {
         this.setState({signed: signed});
       })
