@@ -53,7 +53,7 @@ class Transaction extends LumiComponent {
     var wei = this.state.web3.toWei(eth, 'ether');
     this.setState({amount: 0});
     var that = this;
-    
+
     console.log("requested more credit...");
     this.state.lumi.request_credit.sendTransaction(wei, {from:this.state.account, gas:900000}).then( (err,res) => {
       console.log("withdrawing funds to my account...");
@@ -82,10 +82,10 @@ class Transaction extends LumiComponent {
   render() {
     return (
       <div className="transaction">
-        <h2>Balance: {this.state.ethBalance}</h2>
-        <h2>Loaned: {this.state.ethCredit}</h2>
+        <h2>Personal Account Balance: {this.state.ethBalance.toFixed(3)} ETH</h2>
+        <h2>Credit Card Balance: {this.state.ethCredit.toFixed(3)} ETH</h2>
         <hr/>
-        <h1>Withdraw from credit</h1>
+        <h1>Draw on credit</h1>
         <form onSubmit={this.handleSubmit}>
           <label>
             Withdrawl in ETH:
@@ -93,7 +93,7 @@ class Transaction extends LumiComponent {
           </label>
           <input type="submit" value="Submit" />
         </form>
-        <h1>Make payment on loan</h1>
+        <h1>Make payment</h1>
         <form onSubmit={this.handlePayment}>
           <label>
             Repay in ETH:
