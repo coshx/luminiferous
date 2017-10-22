@@ -23,7 +23,7 @@ contract Luminiferous {
     created_at = block.timestamp;
     interest_updated_at = block.timestamp;
     signed = false;
-    maximum_credit_limit = 2000;
+    maximum_credit_limit = 10000000000000000000;
     credit_request = 0;
     borrower_balance = 0;
   }
@@ -34,6 +34,9 @@ contract Luminiferous {
   }
   function getBank() external returns (address) {
     return address(lender);
+  }
+  function getBorrower() external returns (address) {
+    return borrower;
   }
   function getBorrowerBalance() external returns (uint) {
     return borrower_balance;
@@ -86,10 +89,17 @@ contract Luminiferous {
   }
 
   // Step 3. The Borrower asks the Lender to put money into the contract
-  function request_credit(uint new_limit) onlysigned onlyborrower external {
-    if(borrower_balance > new_limit){ return; } // can't set the credit limit below your current balance
-    credit_request = new_limit;
-    uint credit_amount = new_limit - borrower_balance;
+  // function request_credit(uint new_limit) onlysigned onlyborrower external {
+  //   if(borrower_balance > new_limit){ return; } // can't set the credit limit below your current balance
+  //   credit_request = new_limit;
+  //   uint credit_amount = new_limit - borrower_balance;
+  //   lender.request_funds(credit_amount); // Ask CapitalOne for funds
+
+  //   borrowed(credit_amount, block.timestamp);
+  // }
+  function request_credit(uint increase) onlysigned onlyborrower external {
+    uint credit_amount = borrower_balance + increase;
+    if(credit_amount > maximum_credit_limit) { return; } // can't ask for more than the max credit limit
     lender.request_funds(credit_amount); // Ask CapitalOne for funds
 
     borrowed(credit_amount, block.timestamp);

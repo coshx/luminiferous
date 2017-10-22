@@ -6,7 +6,6 @@ contract AbstractLumi {
 
 contract LuminiferousBank {
   uint created_at;
-  event OhShitShitShit(uint wat);
 
   AbstractLumi lumi;
 
@@ -24,7 +23,6 @@ contract LuminiferousBank {
 
   function request_funds(uint _amount){
     // Here you would verify the contract.
-    OhShitShitShit(_amount);
     lumi = AbstractLumi(msg.sender);
     lumi.accept_funds.value(_amount)();
   }

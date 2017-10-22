@@ -23,6 +23,10 @@ class Report extends LumiComponent {
     this.state.lumi.isSigned.call({from: this.state.account})
       .then( (err, signed) => {
         this.setState({signed: signed});
+        var borrowed = this.state.lumi.borrowed({},{fromBlock: 0, toBlock: 'latest'});
+        borrowed.get(function(err, logs){
+          console.log(logs);
+        });
       })
       .catch( (err) => {
         console.log("Exception in isSigned()", err);
