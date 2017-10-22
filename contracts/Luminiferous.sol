@@ -35,6 +35,9 @@ contract Luminiferous {
   function getBank() external returns (address) {
     return address(lender);
   }
+  function getBorrowerBalance() external returns (uint) {
+    return borrower_balance;
+  }
   function isLender(address _addr) returns (bool) {
     return address(lender) == _addr;
   }
@@ -103,7 +106,8 @@ contract Luminiferous {
 
   // Step 5. Lender pings the contract to compute interest on the loan
   function compute_interest() onlysigned external {
-    uint interest_period = block.timestamp - interest_updated_at; // in seconds
+    //uint interest_period = block.timestamp - interest_updated_at; // in seconds
+    uint interest_period = 21 days;
     borrower_balance = borrower_balance + (borrower_balance * interest_period / eth_second_per_interest); //overflow risk?
     interest_updated_at = block.timestamp;
   }
