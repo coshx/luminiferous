@@ -2,18 +2,19 @@ pragma solidity 0.4.15;
 import "contracts/LuminiferousBank.sol";
 
 contract Luminiferous {
-  LuminiferousBank private lender; // Locked to Capital One Lumibank Contract
+  LuminiferousBank private lender; // Could be hardcoded to a Capital One Lumibank Contract
   address private borrower;
   bool public signed;
 
   uint public maximum_credit_limit;
-  uint public credit_request;
   uint public borrower_balance;
-  uint public eth_second_per_interest = 262800000; // 12% APR. inverse of traditional "APR" to avoid division
+  uint public eth_second_per_interest = 262800000; // 12% APR. Inverse of traditional "APR" to avoid long division
 
   uint created_at;
   uint interest_updated_at;
 
+  // Permanent events stored on the blockchain
+  //   - 3rd parties use these to compute credit scores etc.
   event borrowed(uint amount, uint timestamp);
   event repayed(uint amount, uint timestamp);
 
@@ -23,8 +24,7 @@ contract Luminiferous {
     created_at = block.timestamp;
     interest_updated_at = block.timestamp;
     signed = false;
-    maximum_credit_limit = 10000000000000000000;
-    credit_request = 0;
+    maximum_credit_limit = 10000000000000000000; // 100ETH
     borrower_balance = 0;
   }
 
@@ -67,66 +67,63 @@ contract Luminiferous {
     _;
   }
 
-  // Fallback function!
-  // remember: 2300 maximum gas
+  // Default fallback function
   function() payable {
-    // Anyone can put money in.
+    // Anyone can deposit money if they really want to.
+    // Only normal use case would be the bank issuing a refund for fraud/etc.
   }
 
-  // Step 0. The Lender sets the terms (currently hard-coded for testing and demo)
+  // Step 0. The Lender sets the terms of the contract (currently hard-coded for testing and demo).
   function setLumibank(address bank) onlyunsigned external {
     lender = LuminiferousBank(bank);
   }
 
-  // Step 1. The Lender approves a specific borrower after checking their credit score
+  // Step 1. The Lender approves a specific borrower after checking their
+  //         credit score / verifying identity.
   function approve_borrower(address _borrower) external {
     borrower = _borrower;
   }
 
-  // Step 2. The Borrower reviews the contract, agrees to the terms, signs the contract
+  // Step 2. The Borrower reviews the contract, agrees to the terms, signs the contract.
   function sign_contract() onlyunsigned onlyborrower external {
     signed = true;
   }
 
-  // Step 3. The Borrower asks the Lender to put money into the contract
-  // function request_credit(uint new_limit) onlysigned onlyborrower external {
-  //   if(borrower_balance > new_limit){ return; } // can't set the credit limit below your current balance
-  //   credit_request = new_limit;
-  //   uint credit_amount = new_limit - borrower_balance;
-  //   lender.request_funds(credit_amount); // Ask CapitalOne for funds
-
-  //   borrowed(credit_amount, block.timestamp);
-  // }
+  // Step 3. The Borrower asks the Lender to put more money into the contract.
   function request_credit(uint increase) onlysigned onlyborrower external {
     uint credit_amount = borrower_balance + increase;
-    if(credit_amount > maximum_credit_limit) { return; } // can't ask for more than the max credit limit
-    lender.request_funds(credit_amount); // Ask CapitalOne for funds
+    if(credit_amount > maximum_credit_limit) { return; } // not any more than max credit limit
+    lender.request_funds(credit_amount); // Ask CapitalOne Lumibank for funds
 
     borrowed(credit_amount, block.timestamp);
   }
 
-  // Lender calls this to deposit the funds. Can't deposit more than the borrower asked for.
-  function accept_funds() payable external {
-    borrower_balance += msg.value; // funds are now available in the account
+  // Lender callback to actually deposit the funds.
+  function accept_funds() payable external { // temporarily removed 'onlysigned onlylender' for demo
+    borrower_balance += msg.value;
   }
 
   // Step 4. The Borrower can withdraw all funds into their personal account and spend them.
-  //         note that unlike a normal contract, we don't need withdraw pattern here (only borrower can withdraw via this function)
+  //         note: unlike a normal contract, we don't need to use a withdraw pattern here
+  //         (only borrower can withdraw via this function, no re-entrancy worries)
   function withdraw() onlysigned onlyborrower external {
     borrower.transfer(this.balance);
   }
 
   // Step 5. Lender pings the contract to compute interest on the loan
   function compute_interest() onlysigned external {
+
+    // In real life this would be based on the block.timestamp ... 
     //uint interest_period = block.timestamp - interest_updated_at; // in seconds
-    uint interest_period = 30 days;
-    borrower_balance = borrower_balance + (borrower_balance * interest_period / eth_second_per_interest); //overflow risk?
+
+    uint interest_period = 30 days; // ... for demo purposes we just pretend 30 days.
+    borrower_balance = borrower_balance + (borrower_balance * interest_period / eth_second_per_interest);
     interest_updated_at = block.timestamp;
   }
 
   // Step 6. Borrower makes a payment on the loan. Note that because this is payable you can
-  //         send money along with it, which will update `this.balance`.
-  function repay(bool reset_limit) payable onlysigned onlyborrower external {
+  //         send money along with it, which will update `this.balance` before it runs.
+  function repay() payable onlysigned onlyborrower external {
     uint repayment_amount = this.balance;
     if(repayment_amount > borrower_balance) {
       repayment_amount = borrower_balance; // can't pay back more than the balance due.
@@ -134,9 +131,6 @@ contract Luminiferous {
     bool result = lender.return_funds.value(repayment_amount)();
     if(result) {
       borrower_balance = borrower_balance - repayment_amount;
-    }
-    if(reset_limit) {
-      credit_request = borrower_balance;
     }
     repayed(repayment_amount, block.timestamp);
   }

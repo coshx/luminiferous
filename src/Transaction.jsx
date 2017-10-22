@@ -14,6 +14,8 @@ class Transaction extends LumiComponent {
     this.handlePayment = this.handlePayment.bind(this);
     this.updateBalance = this.updateBalance.bind(this);
 
+    var that = this;
+    setInterval(function(){that.updateBalance();},200); // for demo
   }
 
   updateBalance() {
@@ -49,39 +51,17 @@ class Transaction extends LumiComponent {
     event.preventDefault();
     var eth = this.state.amount;
     var wei = this.state.web3.toWei(eth, 'ether');
+    this.setState({amount: 0});
     var that = this;
-    console.log(wei,this.state.account);
-    console.log(this.state.lumi.address);
-    this.state.lumi.getBorrower.call().then( (bor) => {
-      console.log("getBorrower:",bor);
-    });
-    this.state.web3.eth.getBalance(this.state.lumibank.address, (err, bal) => {
-      console.log("lumibank balance: ",bal.toNumber())
-    });
-    this.state.web3.eth.getBalance(this.state.lumi.address, (err, bal) => {
-      console.log("lumi balance: ",bal.toNumber())
-    });
+    
+    console.log("requested more credit...");
     this.state.lumi.request_credit.sendTransaction(wei, {from:this.state.account, gas:900000}).then( (err,res) => {
-    //this.state.web3.eth.sendTransaction({from:this.state.account, to:this.state.lumibank.address, value: wei}, (err) => {
-      console.log("requested credit...");
-      that.state.web3.eth.getBalance(that.state.lumibank.address, (err, bal) => {
-        console.log("lumibank balance: ",bal.toNumber())
-      });
-      that.state.web3.eth.getBalance(that.state.lumi.address, (err, bal) => {
-        console.log("lumi balance: ",bal.toNumber())
-      });
-      that.state.lumi.withdraw({from:that.state.account}).then( function(r){
-        console.log("withdrew to my account!");
+      console.log("withdrawing funds to my account...");
+      that.state.lumi.withdraw({from:that.state.account}).then( function(r){        
+        console.log("Done!");
         that.updateBalance();
-        that.state.web3.eth.getBalance(that.state.lumibank.address, (err, bal) => {
-          console.log("lumibank balance: ",bal.toNumber())
-        });
-        that.state.web3.eth.getBalance(that.state.lumi.address, (err, bal) => {
-          console.log("lumi balance: ",bal.toNumber())
-        });
       });
     });
-    this.setState({amount: 0, repay_amount: 0});
   }
 
   handlePayment(event) {
@@ -89,18 +69,14 @@ class Transaction extends LumiComponent {
     event.preventDefault();
     var eth = this.state.repay_amount;
     var wei = this.state.web3.toWei(eth, 'ether');
+    this.setState({repay_amount: 0});
     var that = this;
 
-    this.state.lumi.repay.sendTransaction(true, {value: wei, from:this.state.account, gas:900000}).then( (err,res) => {
-      console.log("making repayment...");
-      that.state.web3.eth.getBalance(that.state.lumibank.address, (err, bal) => {
-        console.log("lumibank balance: ",bal.toNumber())
-      });
-      that.state.web3.eth.getBalance(that.state.lumi.address, (err, bal) => {
-        console.log("lumi balance: ",bal.toNumber())
-      });
+    console.log("making repayment...");
+    this.state.lumi.repay.sendTransaction({value: wei, from:this.state.account, gas:900000}).then( (err,res) => {
+      console.log("Done!");
     });
-    this.setState({amount: 0, repay_amount: 0});
+    
   }
 
   render() {
