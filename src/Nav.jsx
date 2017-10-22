@@ -42,9 +42,9 @@ class Nav extends Component {
              style={this.state.showMenu ? {} : {display: 'none'}}>
           <ul className="pure-menu-list">
             <li><Link to="/">Luminiferous</Link> {' '}</li>
+            <li><Link to="/offers">Offers</Link> {' '}</li>
             <li><Link to="/report">My Report</Link> {' '}</li>
             <li><Link to="/tx">Transaction</Link> {' '}</li>
-            <li><Link to="/example/">Test Truffle</Link></li>
           </ul>
         </nav>
       </div>

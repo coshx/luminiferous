@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import LumiComponent from './LumiComponent';
 
 class Report extends LumiComponent {
@@ -7,6 +8,7 @@ class Report extends LumiComponent {
     super(props);
     this.state.ethBalance = 0;
     this.state.signed = false;
+    this.signContract = this.signContract.bind(this);
   }
 
   updateBalance() {
@@ -17,9 +19,8 @@ class Report extends LumiComponent {
     });
   }
 
-  lumiInit() {
-    this.updateBalance();
-    this.state.lumi.isSigned({from: this.state.account})
+  updateSigned() {
+    this.state.lumi.isSigned.call({from: this.state.account})
       .then( (err, signed) => {
         this.setState({signed: signed});
       })
@@ -28,12 +29,32 @@ class Report extends LumiComponent {
       });
   }
 
+  lumiInit() {
+    this.updateBalance();
+    this.updateSigned();
+  }
+
+  signContract(event) {
+    if (event.target.value) {
+      this.state.lumi.sign_contract.sendTransaction({from: this.state.account})
+        .then( () => {
+          setTimeout(this.updateSigned, 5000);
+        });
+    }
+  }
+
   render() {
     return (
       <div className="report">
         <h1>My Credit Report</h1>
         <p>Current ETH Balance: {this.state.ethBalance}</p>
-        <p>Contract Signed? {this.state.signed ? "Yes" : "No"}</p>
+        <label>
+          Signed Contract:
+          <input type="checkbox" checked={this.state.signed} onChange={this.signContract} />
+        </label>
+        <br/>
+        <br/>
+        <Link to="/tx" className="pure-button pure-button-primary">Make a Payment</Link>
       </div>
     );
   };
