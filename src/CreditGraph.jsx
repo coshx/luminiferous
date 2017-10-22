@@ -8,7 +8,7 @@ class CreditGraph extends LumiComponent {
 
   render() {
     return (
-      <div className="CreditGraph DashboardWidget pure-u-7-12">
+      <div className="CreditGraph pure-u-7-12">
         <img src="credit-graph-mock.png" />
       </div>
     );

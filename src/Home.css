@@ -1,16 +1,18 @@
 .CreditGraph {
+  margin-top: 2rem;
 }
 
 .CreditGraph img {
-  width: 90%;
+  width: 100%;
   height: 300px;
 }
 
 .CreditScore {
-  margin-left: 3rem;
+  margin-top: 2rem;
+  margin-left: 5.5rem;
 }
 .CreditScore img {
-  width: 90%;
+  width: 100%;
   height: 300px;
 }
 
