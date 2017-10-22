@@ -118,33 +118,34 @@ class Admin extends LumiComponent {
   render() {
     return (
       <div>
-        <div className="admin">
-          <h2>LumiBank Balance: {this.state.balance} ETH</h2>
-          <h2>LumiBank Owner: {this.state.bank}</h2>
-          <h2>LumiBank Borrower: {this.state.borrower}</h2>
-          <h2>Contract Signed: {this.state.signed}</h2>
+        <div className="admin pure-u-1-1 DashboardWidget">
+          <p><strong>LumiBank Balance:</strong> {this.state.balance} ETH</p>
+          <p><strong>LumiBank Owner:</strong> {this.state.bank}</p>
+          <p><strong>LumiBank Borrower:</strong> {this.state.borrower}</p>
+          <p><strong>Contract Signed: </strong>{this.state.signed}</p>
+	      </div>
+        <div className="admin pure-u-5-12 DashboardWidget">
+          <h4>1. BANK: Put some funds in the Lumibank</h4>
+          <a className="pure-button pure-button-primary" onClick={this.fundLumibank}>Put 20ETH in Lumibank</a>
         </div>
-        <hr/>
-        <div className="admin">
-          <h3>BANK: Put some funds in the Lumibank</h3>
-          <div><button className="pure-button pure-button-primary" onClick={this.fundLumibank}>Put 20ETH in Lumibank</button></div>
+        <div className="pure-u-1-12"/>
+        <div className="admin pure-u-5-12 DashboardWidget">
+          <h4>2. BANK: Setup a new contract</h4>
+          <a className="pure-button pure-button-primary" onClick={this.setupContract}>Setup Contract</a>
         </div>
-        <div className="admin">
-          <h3>BANK: Setup a new contract</h3>
-          <div><button className="pure-button pure-button-primary" onClick={this.setupContract}>Setup Contract</button></div>
+        <div className="admin pure-u-5-12 DashboardWidget">
+          <h4>3. BANK: Approve borrower for a new credit line</h4>
+          <input type="text" placeholder="Borrower Address" onChange={this.updateBorrowerAddress}/>{' '}
+          <a className="pure-button pure-button-primary" onClick={this.approveBorrower}>Approve new Borrower</a>
         </div>
-        <div className="admin">
-          <h3>BANK: Approve borrower for a new credt line</h3>
-          <div><input type="text" placeholder="Borrower Address" onChange={this.updateBorrowerAddress}/></div>
-          <div><button className="pure-button pure-button-primary" onClick={this.approveBorrower}>Approve new Borrower</button></div>
+        <div className="pure-u-1-12"/>
+        <div className="admin pure-u-5-12 DashboardWidget">
+          <h4>4. BORROWER: Sign contract</h4>
+          <a className="pure-button pure-button-primary" onClick={this.signContract}>Sign Contract</a>
         </div>
-        <div className="admin">
-          <h3>BORROWER: Sign contract</h3>
-          <div><button className="pure-button pure-button-primary" onClick={this.signContract}>Sign Contract</button></div>
-        </div>
-        <div className="admin">
-          <h3>BANK: Calculate Interest</h3>
-          <div><button className="pure-button pure-button-primary" onClick={this.calcInterest}>Calculate Interest</button></div>
+        <div className="admin pure-u-5-12 DashboardWidget">
+          <h4>5. BANK: Calculate Interest</h4>
+          <a className="pure-button pure-button-primary" onClick={this.calcInterest}>Calculate Interest</a>
         </div>
       </div>
     );

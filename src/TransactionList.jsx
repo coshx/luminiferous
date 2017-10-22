@@ -64,7 +64,7 @@ class TransactionList extends LumiComponent {
       <div className="TransactionList DashboardWidget pure-u-1-1">
         <div className="header">
           <span className="title">TRANSACTIONS</span>
-          <Link className="add" to="/tx">
+          <Link className="add pure-button pure-button-primary" to="/tx">
             <i className="fa fa-plus"/>
           </Link>
         </div>

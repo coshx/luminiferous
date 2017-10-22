@@ -20,6 +20,7 @@
   box-shadow: -5px 5px 3px #f8f8f8;
   border: 1px solid #efefef;
   border-radius: 3px;
+  padding: 1rem;
   margin-top: 2rem;
   margin-bottom: 2rem;
 }
@@ -41,13 +42,11 @@
 }
 
 .TransactionList .header .add {
-  color: #848484;
   float: right;
   font-size: 0.8em;
   padding: 0.8rem;
   margin-right: 1.8rem;
   margin-top: 1.2rem;
-  background: #fff;
 }
 
 .transaction {
