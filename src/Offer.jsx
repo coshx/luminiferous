@@ -6,40 +6,20 @@ class Offer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      terms: props.terms,
-      name: props.name,
-      offer_id: props.id,
-      accept_link: '/offers/' + props.id + '/accept'
+      details: props.details
     };
   }
 
   render() {
     return (
       <div className="offer">
-        <h2>{this.state.name}</h2>
-        <table>
-          <thead>
-          <tr>
-            <th>APR</th>
-            <th>Limit</th>
-            <th>Balance Transfers</th>
-            <th>Annual Fee</th>
-            <th>Credit Required</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <td>{this.state.terms.apr}</td>
-            <td>${this.state.terms.limit}</td>
-            <td>{this.state.terms.balance_transfers ? "Yes" : "No"}</td>
-            <td>${this.state.terms.annual_fee_first_year} (First Year)<br/>
-                ${this.state.terms.annual_fee_subsequent_years} (Subsequent Years)
-            </td>
-            <td>{this.state.terms.credit_required}</td>
-          </tr>
-          </tbody>
-        </table>
-        <Link to={this.state.accept_link} className="pure-button pure-button-primary">Apply Now</Link>
+        <h2>{this.state.details.productDisplayName}</h2>
+        <img src={this.state.details.images[0].url}/>
+        <p>{this.state.details.code}</p>
+        <p>{this.state.details.marketingCopy[0]}</p>
+        <Link to={this.state.details.additionalInformationUrl}
+              className="pure-button pure-button-primary">More Information</Link>
+        <Link to="/" className="pure-button pure-button-primary">Apply Now</Link>
       </div>
     );
   };

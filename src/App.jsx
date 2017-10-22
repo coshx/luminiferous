@@ -70,7 +70,7 @@ class App extends Component {
                 <HeaderNav/>
                 <Switch>
                   <Route path="/offers/:id/accept" component={this.AcceptOffer}/>
-                  <Route path="/offers" render={this.OfferList}/>
+                  <Route path="/offers" component={OfferList}/>
                   <Route path="/approved" component={Approved} />
                   <Route path="/report" component={Report}/>
                   <Route path="/admin" component={Admin}/>
