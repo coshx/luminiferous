@@ -4,7 +4,7 @@ import "contracts/LuminiferousBank.sol";
 contract Luminiferous {
   LuminiferousBank private lender; // Locked to Capital One Lumibank Contract
   address private borrower = 0x0;
-  bool signed = false;
+  bool public signed = false;
 
   uint public maximum_credit_limit = 2000;
   uint public requested_credit_limit = 0;
@@ -23,17 +23,8 @@ contract Luminiferous {
   }
 
   // Helper functions
-  function isSigned() returns (bool) {
+  function isSigned() external returns (bool) {
     return signed && (borrower > 0);
-  }
-  function getBorrowerBalance() returns (uint) {
-    return borrower_balance;
-  }
-  function getRequestedCreditLimit() returns (uint) {
-    return requested_credit_limit;
-  }
-  function getMaximumCreditLimit() returns (uint) {
-    return maximum_credit_limit;
   }
   function isLender(address _addr) returns (bool) {
     return address(lender) == _addr;
@@ -44,11 +35,12 @@ contract Luminiferous {
 
   // Modifiers
   modifier onlysigned {
-    require(isSigned());
+    require(signed);
+    require(borrower > 0);
     _;
   }
   modifier onlyunsigned {
-    require(!isSigned());
+    require(!signed);
     _;
   }
   modifier onlyborrower {
