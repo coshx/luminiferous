@@ -10,37 +10,42 @@ class TransactionList extends LumiComponent {
     this.state.logs = [];
   }
   lumiInit() {
+    var that = this;
+
     var borrowed = this.state.lumi.borrowed({}, {fromBlock: 0, toBlock: 'latest'});
-    borrowed.get( (err, logs) => {
-      var that = this;
-      this.setState({logs: logs});
-      console.dir(logs);
+    borrowed.get( (err, borrowedLogs) => {
+      var repayed = this.state.lumi.repayed({}, {fromBlock: 0, toBlock: 'latest'});
+      repayed.get( (err, repayedLogs) => {
+        var allLogs = [];
+        allLogs.push(...borrowedLogs);
+        allLogs.push(...repayedLogs);
 
-      var human_logs = logs.map(function(log){
-        var bal = log.args.amount.toNumber();
-        var t = new Date(log.args.timestamp.toNumber()*1000);
-        console.log(t);
-        if(log.event === "borrowed") {
-          return {
-            description: "Credit Card Payment ... " + t.toLocaleString(),
-            amount: that.state.web3.fromWei(bal, 'ether')+" ETH"
-          };
-        } else {
-          return {
-            description: "Repayment ...(date)",
-            amount: that.state.web3.fromWei(bal, 'ether')+" ETH"
-          };
-        }
+        allLogs.sort( (a,b) => {
+          var t1 = a.args.timestamp.toNumber() * 1000;
+          var t2 = b.args.timestamp.toNumber() * 1000;
+          return t1 - t2;
+        });
 
+        var humanLogs = allLogs.map( (log) => {
+          var bal = log.args.amount.toNumber();
+          var t = new Date(log.args.timestamp.toNumber() * 1000);
+
+          if (log.event === 'borrowed') {
+            return {
+              description: "Credit Card Purchase ... " + t.toLocaleString(),
+              amount: that.state.web3.fromWei(bal, 'ether') + " ETH"
+            };
+          } else {
+            return {
+              description: "Repayment ... " + t.toLocaleString(),
+              amount: '(' + that.state.web3.fromWei(bal, 'ether') + ' ETH)'
+            };
+          }
+        });
+
+        that.setState({logs: humanLogs});
+        console.log(humanLogs);
       });
-
-      // var human_logs = [
-      //   {description: 'Credit Card Payment 10/16', amount: '$204.12 = 0.686 ETH'},
-      //   {description: 'Credit Card Payment 10/1', amount: '$1672.34 = 5.616 ETH'}
-      // ];
-
-      console.log(human_logs);
-      this.setState({logs: human_logs});
 
     });
 
