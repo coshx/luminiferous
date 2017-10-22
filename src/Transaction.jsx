@@ -15,7 +15,13 @@ class Transaction extends LumiComponent {
     this.updateBalance = this.updateBalance.bind(this);
 
     var that = this;
-    setInterval(function(){that.updateBalance();},200); // for demo
+    this.timer = setInterval(function(){
+      that.updateBalance();
+    },200); // for demo
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
   }
 
   updateBalance() {
