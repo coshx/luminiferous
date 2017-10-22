@@ -7,47 +7,54 @@ class TransactionList extends LumiComponent {
   constructor(props) {
     super(props);
 
-    this.state.logs = [];
+    this.state.borrowedlog = [];
   }
   lumiInit() {
     var borrowed = this.state.lumi.borrowed({}, {fromBlock: 0, toBlock: 'latest'});
+    var repayed = this.state.lumi.repayed({}, {fromBlock: 0, toBlock: 'latest'});
+    this.setState({borrowedlog: []});
+
     borrowed.get( (err, logs) => {
       var that = this;
-      this.setState({logs: logs});
-      console.dir(logs);
 
       var human_logs = logs.map(function(log){
         var bal = log.args.amount.toNumber();
         var t = new Date(log.args.timestamp.toNumber()*1000);
         console.log(t);
-        if(log.event === "borrowed") {
-          return {
-            description: "Credit Card Payment ... " + t.toLocaleString(),
-            amount: that.state.web3.fromWei(bal, 'ether')+" ETH"
-          };
-        } else {
-          return {
-            description: "Repayment ...(date)",
-            amount: that.state.web3.fromWei(bal, 'ether')+" ETH"
-          };
-        }
-
+        return {
+          description: "Credit Card Payment ... " + t.toLocaleString(),
+          amount: that.state.web3.fromWei(bal, 'ether')+" ETH"
+        };
       });
 
-      // var human_logs = [
-      //   {description: 'Credit Card Payment 10/16', amount: '$204.12 = 0.686 ETH'},
-      //   {description: 'Credit Card Payment 10/1', amount: '$1672.34 = 5.616 ETH'}
-      // ];
+      console.log(human_logs);
+      this.setState({borrowedlog: human_logs});
+
+    });
+
+    repayed.get( (err, logs) => {
+      var that = this;
+
+      var human_logs = logs.map(function(log){
+        var bal = log.args.amount.toNumber();
+        var t = new Date(log.args.timestamp.toNumber()*1000);
+        console.log(t);
+        return {
+          description: "Repayed ... " + t.toLocaleString(),
+          amount: "-" + that.state.web3.fromWei(bal, 'ether')+" ETH"
+        };
+      });
 
       console.log(human_logs);
-      this.setState({logs: human_logs});
+      this.setState({repayedlog: human_logs});
 
     });
 
   }
 
   render() {
-    var txList = this.state.logs.map( (log) => {
+    var logs = this.state.borrowedLogs.push(this.state.repayedLogs);
+    var txList = logs.map( (log) => {
       return (
         <div className="transaction">
           <span className="description">{log.description}</span>
