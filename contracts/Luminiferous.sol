@@ -114,6 +114,8 @@ contract Luminiferous {
   // Step 6. Borrower makes a payment on the loan. Note that because this is payable you can
   //         send money along with it, which will update `this.balance`.
   function repay(bool reset_limit) payable onlysigned onlyborrower external {
+    OhNoHowDidItComeToThis(this.balance);
+    OhNoHowDidItComeToThis(msg.value);
     uint repayment_amount = this.balance;
     if(repayment_amount > borrower_balance) {
       repayment_amount = borrower_balance; // can't pay back more than the balance due.
