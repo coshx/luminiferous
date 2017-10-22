@@ -57,8 +57,9 @@ class LumiComponent extends Component {
         console.log(this.state.lumibank.address);
         //return lumi.setLumibank.sendTransaction(this.state.lumibank.address,{from:this.state.account});
         return this.state.lumi.getBank.call();
-      }).then( (bank) => {
-        console.log(bank);
+        //return this.state.lumi.approve_borrower.sendTransaction(0x96c057ffb76f3c5d422676c07b4975742eb950ee,{from:this.state.account});
+      }).then( (info) => {
+        console.log(info);
         console.log("Done!");
         return this.lumiInit();
       });

@@ -3,7 +3,7 @@ import "contracts/LuminiferousBank.sol";
 
 contract Luminiferous {
   LuminiferousBank private lender; // Locked to Capital One Lumibank Contract
-  address private borrower = 0x0;
+  address private borrower;
   bool public signed = false;
 
   uint public maximum_credit_limit = 2000;

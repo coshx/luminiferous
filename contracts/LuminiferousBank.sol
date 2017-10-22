@@ -2,6 +2,7 @@ pragma solidity 0.4.15;
 
 contract LuminiferousBank {
   uint created_at;
+  address owner;
 
   // Constructor
   function LuminiferousBank() {
