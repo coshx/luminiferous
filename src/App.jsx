@@ -4,7 +4,6 @@ import {
   Route,
   Switch,
 } from 'react-router-dom';
-import SimpleStorageContract from '../build/contracts/SimpleStorage.json';
 import getWeb3 from './utils/getWeb3';
 
 import './css/oswald.css';
