@@ -23,8 +23,7 @@ class HeaderNav extends Component {
     var loc = path ? path : window.location.pathname;
     var links = [
       { path: "/", title: "My Lumin", key: 1, active: (loc == "" || loc == "/") },
-      { path: "/offers", title: "Offers", key: 2, active: (loc == "/offers") },
-      { path: "/report", title: "Credit Report", key: 3, active: (loc == "/report") }
+      { path: "/offers", title: "Offers", key: 2, active: (loc == "/offers") }
     ];
 
     this.state.links = links;
@@ -38,7 +37,7 @@ class HeaderNav extends Component {
     return (
       <div className="menu">
         <h1 className="pure-u-1-2">Explore Your Credit</h1>
-        <div className="pure-u-1-6"/>
+        <div className="pure-u-1-4"/>
         {linksList}
       </div>
     );
