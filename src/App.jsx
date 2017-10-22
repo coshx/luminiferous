@@ -26,6 +26,7 @@ import OfferList from './OfferList';
 import AcceptOffer from './AcceptOffer';
 import Approved from './Approved';
 import Header from './Header';
+import Admin from './Admin';
 
 class App extends Component {
   constructor(props) {
@@ -72,6 +73,7 @@ class App extends Component {
                   <Route path="/offers" render={this.OfferList}/>
                   <Route path="/approved" component={Approved} />
                   <Route path="/report" component={Report}/>
+                  <Route path="/admin" component={Admin}/>
                   <Route path="/tx" component={Transaction}/>
                   <Route path="/" component={Home}/>
                 </Switch>
