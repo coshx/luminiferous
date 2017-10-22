@@ -7,11 +7,14 @@ class Header extends Component {
   render() {
     return (
       <div className="header">
-        <img src="logo.png"/>
-        <img src="profile_image.png"/>
+        <div className="pure-u-1-6" />
+        <img src="logo.png" className="logo pure-u-1-6" />
+        <div className="pure-u-1-2" />
+        <img src="profile_image.png" style={{width: "60px"}} className="profile pure-u-1-12" />
+        <div className="pure-u-1-12" />
       </div>
     );
   };
 }
 
-export default Header
+export default Header;

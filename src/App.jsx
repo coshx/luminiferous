@@ -13,8 +13,11 @@ import './css/pure-grids-responsive-min.css';
 import './css/font-awesome.min.css';
 import './App.css';
 import './Nav.css';
+import './Header.css';
+import './HeaderNav.css';
 import Home from './Home';
 import Nav from './Nav';
+import HeaderNav from './HeaderNav';
 import Report from './Report';
 import Transaction from './Transaction';
 import Offer from './Offer';
@@ -60,7 +63,9 @@ class App extends Component {
           <div className="pure-g">
             <div className="pure-u-1-1">
               <Header/>
-              <main className="container">
+              <div className="pure-u-1-6"/>
+              <main className="pure-u-7-12">
+                <HeaderNav/>
                 <Switch>
                   <Route path="/offers/:id/accept" component={this.AcceptOffer}/>
                   <Route path="/offers" render={this.OfferList}/>
@@ -70,6 +75,7 @@ class App extends Component {
                   <Route path="/" component={Home}/>
                 </Switch>
               </main>
+              <div className="pure-u-1-6" />
             </div>
           </div>
         </div>

@@ -1,0 +1,15 @@
+.header {
+  background-color: #272e35;
+  height: 80px;
+}
+
+.header .logo {
+  height: 40px;
+  width: 100px;
+  margin-top: 14px;
+}
+
+.header .profile {
+  margin-top: 6px;
+  width: 60px;
+}

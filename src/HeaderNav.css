@@ -1,0 +1,20 @@
+.menu a, .menu a:visited {
+  display: inline-block;
+  text-decoration: none;
+  color: #272e35;
+  font-size: 1.3em;
+  padding-top: 1.5rem;
+  margin-right: 1.0rem;
+  padding-bottom: 1.5rem;
+}
+
+.menu a:hover {
+  border-bottom: 8px solid #272e35;
+}
+.menu a.active {
+  border-bottom: 6px solid #01d731;
+}
+
+.menu {
+  border-bottom: 1px solid #eaeaea;
+}
