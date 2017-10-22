@@ -47,3 +47,18 @@
   margin-top: 1.2rem;
   background: #fff;
 }
+
+.transaction {
+  font-size: 1.1em;
+  padding-left: 12px;
+  margin-right: 12px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.transaction .description {
+}
+
+.transaction .amount {
+  float: right;
+}
