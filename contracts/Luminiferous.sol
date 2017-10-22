@@ -26,6 +26,15 @@ contract Luminiferous {
   function isSigned() returns (bool) {
     return signed && (borrower > 0);
   }
+  function getBorrowerBalance() returns (uint) {
+    return borrower_balance;
+  }
+  function getRequestedCreditLimit() returns (uint) {
+    return requested_credit_limit;
+  }
+  function getMaximumCreditLimit() returns (uint) {
+    return maximum_credit_limit;
+  }
   function isLender(address _addr) returns (bool) {
     return address(lender) == _addr;
   }

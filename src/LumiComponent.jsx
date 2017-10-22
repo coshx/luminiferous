@@ -48,7 +48,7 @@ class LumiComponent extends Component {
 
     // get accounts
     this.state.web3.eth.getAccounts((error, accounts) => {
-      this.state.account = accounts[0];
+      this.setState({account:accounts[0]});
       luminiferousBankContract.deployed().then((lumibank) => {
         this.setState({lumibank: lumibank});
         return luminiferousContract.deployed();
