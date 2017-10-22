@@ -10,16 +10,46 @@ class Admin extends LumiComponent {
     super(props);
 
     this.state.borrowerAddress = '';
+    this.state.balance = 0;
+    this.state.bank = 0;
+    this.state.signed = false;
+
     this.signContract = this.signContract.bind(this);
     this.updateBorrowerAddress = this.updateBorrowerAddress.bind(this);
     this.setupContract = this.setupContract.bind(this);
     this.approveBorrower = this.approveBorrower.bind(this);
     this.fundLumibank = this.fundLumibank.bind(this);
     this.calcInterest = this.calcInterest.bind(this);
+    this.updateStats = this.updateStats.bind(this);
+
+    var that = this;
+    this.admintimer = setInterval(function(){
+      that.updateStats();
+    },1000); // for demo
   }
 
   lumiInit() {
-    console.log
+
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.admintimer);
+  }
+
+  updateStats() {
+    var that = this;
+    this.state.lumi.isSigned.call().then( (signed) => {
+      var signatureState = signed;
+      that.setState({signed: signatureState ? "true" : "false"});
+    });
+    this.state.lumi.getBank.call().then( (bank) => {
+      var bankAddr = bank;
+      that.setState({bank: bankAddr});
+    });
+    this.state.web3.eth.getBalance(that.state.lumibank.address, (err,bal) => {
+      var ethBal = that.state.web3.fromWei(bal, 'ether').toNumber();
+      that.setState({balance: ethBal});
+    });
   }
 
   updateBorrowerAddress(event) {
@@ -83,6 +113,12 @@ class Admin extends LumiComponent {
   render() {
     return (
       <div>
+        <div className="admin">
+          <h2>LumiBank Balance: {this.state.balance} ETH</h2>
+          <h2>LumiBank Owner: {this.state.bank}</h2>
+          <h2>Contract Signed: {this.state.signed}</h2>
+        </div>
+        <hr/>
         <div className="admin">
           <h3>BANK: Put some funds in the Lumibank</h3>
           <div><button className="pure-button pure-button-primary" onClick={this.fundLumibank}>Put 20ETH in Lumibank</button></div>
