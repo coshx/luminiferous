@@ -45,7 +45,7 @@ contract('Luminiferous', function(accounts) {
     });
   });
 
-  it("...wombats fucking a badger to death", function() {
+  it("...michael asks Capital One for 12 wei", function() {
     var lumibank;
     var lumi;
     return LuminiferousBank.new().then(function(_lumibank){
