@@ -5,7 +5,7 @@ contract('Luminiferous', function(accounts) {
 
   var capitalone = accounts[0];
   var michael = accounts[1];
-  var ben = accounts[1];
+  var ben = accounts[2];
 
   it("...capital one should fund the LumiBank", function() {
     var lumibank;

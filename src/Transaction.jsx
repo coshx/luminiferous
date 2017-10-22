@@ -44,7 +44,11 @@ class Transaction extends LumiComponent {
       });
     } else {
       // TODO: can't go this way.
-      this.state.web3.eth.sendTransaction({from:this.state.lumibank.address, to:this.state.account, value: eth});
+      this.state.web3.eth.sendTransaction({
+        from:this.state.lumibank.address,
+        to:this.state.account,
+        value: eth
+      }, console.log);
     }
   }
 
