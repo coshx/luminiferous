@@ -13,7 +13,7 @@ class Transaction extends LumiComponent {
 
   updateBalance() {
     var that = this;
-    this.state.web3.eth.getBalance(that.state.lumibank.address, (err, bal) => {
+    this.state.web3.eth.getBalance(that.state.account, (err, bal) => {
       var ethBal = that.state.web3.fromWei(bal, 'ether').toNumber();
       that.setState({ethBalance: ethBal});
     });
@@ -32,19 +32,20 @@ class Transaction extends LumiComponent {
 
   handleSubmit(event) {
     event.preventDefault();
-    var eth = this.state.amount * 1000000;
+    var eth = this.state.amount;
     if (eth < 0) {
       eth = -1 * eth;
       var wei = this.state.web3.toWei(eth, 'ether');
-      this.state.web3.eth.sendTransaction({from:this.state.account, to:this.state.lumibank.address, value: wei}, (res) => {
-        console.log("Result of sendTransaction");
-        console.dir(res);
+      this.state.web3.eth.sendTransaction({from:this.state.account, to:this.state.lumibank.address, value: wei}, (err) => {
+        setTimeout( () => {
+          this.updateBalance();
+          this.setState({amount: 0});
+        }, 5000);
       });
     } else {
       // TODO: can't go this way.
       this.state.web3.eth.sendTransaction({from:this.state.lumibank.address, to:this.state.account, value: eth});
     }
-    this.updateBalance();
   }
 
   render() {
