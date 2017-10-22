@@ -7,7 +7,7 @@ contract Luminiferous {
   bool public signed = false;
 
   uint public maximum_credit_limit = 2000;
-  uint public credit_drawn = 0;
+  uint public credit_request = 0;
   uint public borrower_balance = 0;
   //uint public apr = 12; // percentage
   uint public eth_second_per_interest = 3784320; // 12% APR. inverse of traditional "APR" to avoid division
@@ -77,10 +77,10 @@ contract Luminiferous {
   }
 
   // Step 3. The Borrower asks the Lender to put money into the contract
-  function updateCreditLimit(uint new_limit) onlysigned onlyborrower external {
-    if(borrower_balance > credit_drawn){ return; } // can't set the credit limit below your current balance
-    credit_drawn = new_limit;
-    lender.request_funds(credit_drawn - borrower_balance); // Ask CapitalOne for funds
+  function request_credit(uint new_limit) onlysigned onlyborrower external {
+    if(borrower_balance > credit_request){ return; } // can't set the credit limit below your current balance
+    credit_request = new_limit;
+    lender.request_funds(credit_request - borrower_balance); // Ask CapitalOne for funds
   }
 
   // Lender calls this to deposit the funds. Can't deposit more than the borrower asked for.
@@ -105,13 +105,15 @@ contract Luminiferous {
   //         send money along with it, which will update `this.balance`.
   function repay(bool reset_limit) payable onlysigned onlyborrower external {
     uint repayment_amount = this.balance;
-    // TODO: make sure you can't go negative.
+    if(repayment_amount > borrower_balance) {
+      repayment_amount = borrower_balance; // can't pay back more than the balance due.
+    }
     bool result = lender.return_funds.value(repayment_amount)();
     if(result) {
       borrower_balance = borrower_balance - repayment_amount;
     }
     if(reset_limit) {
-      credit_drawn = borrower_balance;
+      credit_request = borrower_balance;
     }
   }
 
