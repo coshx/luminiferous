@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import {
-  Link,
-} from 'react-router-dom';
 
 class Example extends Component {
   constructor(props) {
