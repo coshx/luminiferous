@@ -6,6 +6,7 @@ class Report extends LumiComponent {
   constructor(props) {
     super(props);
     this.state.ethBalance = 0;
+    this.state.signed = false;
   }
 
   updateBalance() {
@@ -18,6 +19,13 @@ class Report extends LumiComponent {
 
   lumiInit() {
     this.updateBalance();
+    this.state.lumi.isSigned()
+      .then( (err, signed) => {
+        this.setState({signed: signed});
+      })
+      .catch( (err) => {
+        console.log("Exception in isSigned()", err);
+      });
   }
 
   render() {
@@ -25,6 +33,7 @@ class Report extends LumiComponent {
       <div className="report">
         <h1>My Credit Report</h1>
         <p>Current ETH Balance: {this.state.ethBalance}</p>
+        <p>Contract Signed? {this.state.signed ? "Yes" : "No"}</p>
       </div>
     );
   };
