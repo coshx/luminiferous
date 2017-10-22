@@ -1,0 +1,49 @@
+/* NAVBAR */
+
+/* See https://purecss.io/grids/ */
+@media only screen and (min-width: 48em) {
+  .hamburgerMenu {
+    display: none;
+  }
+  .navbar {
+    height: 100vh;
+  }
+}
+.hamburgerMenu {
+  font-size: 3rem;
+  background: #fff;
+  color: #0c1a2b;
+  border: 0;
+}
+.navbar {
+  padding: 5px;
+  background: #0c1a2b;
+  font-family: 'Oswald', 'Arial Narrow', sans-serif;
+  font-size: 1.6rem;
+}
+
+.navbar a {
+  color: #fff;
+  display: inline-block;
+  width: 100%;
+}
+
+.navbar a:active,
+.navbar a:focus,
+.navbar a:hover {
+  background: #233e5e;
+}
+
+.navbar .pure-menu-heading {
+  font-weight: bold;
+  text-transform: none;
+}
+
+.navbar .navbar-right {
+  float: right;
+}
+
+.navbar .uport-logo {
+  height: 16px;
+  margin-right: 10px;
+}
