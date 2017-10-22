@@ -8,7 +8,7 @@ class CreditScore extends LumiComponent {
 
   render() {
     return (
-      <div className="CreditScore DashboardWidget pure-u-1-3">
+      <div className="CreditScore pure-u-1-3">
         <img src="credit-score-mock.png" />
       </div>
     );

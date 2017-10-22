@@ -41,3 +41,5 @@ chrome-user-data
 *.swp
 *.swo
 .env
+
+src/Env.jsx
