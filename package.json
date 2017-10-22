@@ -94,6 +94,7 @@
     "pinkie-promise": "^2.0.1",
     "react": "^15.6.2",
     "react-dom": "^15.6.2",
+    "react-moment": "^0.6.5",
     "react-router-dom": "^4.2.2",
     "read-pkg": "^2.0.0",
     "read-pkg-up": "^2.0.0",
