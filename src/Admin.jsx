@@ -118,12 +118,12 @@ class Admin extends LumiComponent {
   render() {
     return (
       <div>
-        <div className="admin">
-          <h2>LumiBank Balance: {this.state.balance} ETH</h2>
-          <h2>LumiBank Owner: {this.state.bank}</h2>
-          <h2>LumiBank Borrower: {this.state.borrower}</h2>
-          <h2>Contract Signed: {this.state.signed}</h2>
-	</div>
+        <div className="admin pure-u-1-1 DashboardWidget">
+          <p><strong>LumiBank Balance:</strong> {this.state.balance} ETH</p>
+          <p><strong>LumiBank Owner:</strong> {this.state.bank}</p>
+          <p><strong>LumiBank Borrower:</strong> {this.state.borrower}</p>
+          <p><strong>Contract Signed: </strong>{this.state.signed}</p>
+	      </div>
         <div className="admin pure-u-5-12 DashboardWidget">
           <h4>1. BANK: Put some funds in the Lumibank</h4>
           <a className="pure-button pure-button-primary" onClick={this.fundLumibank}>Put 20ETH in Lumibank</a>
