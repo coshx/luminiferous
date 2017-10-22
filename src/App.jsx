@@ -15,6 +15,7 @@ import './App.css';
 import './Nav.css';
 import './Header.css';
 import './HeaderNav.css';
+import './Home.css';
 import Home from './Home';
 import Nav from './Nav';
 import HeaderNav from './HeaderNav';

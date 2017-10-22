@@ -1,0 +1,49 @@
+.CreditGraph {
+}
+
+.CreditGraph img {
+  width: 90%;
+  height: 300px;
+}
+
+.CreditScore {
+  margin-left: 3rem;
+}
+.CreditScore img {
+  width: 90%;
+  height: 300px;
+}
+
+.DashboardWidget {
+  box-shadow: -5px 5px 3px #f8f8f8;
+  border: 1px solid #efefef;
+  border-radius: 3px;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.TransactionList {
+  background-color: #fff;
+}
+
+.TransactionList .header {
+  background-color: #f4f4f5;
+}
+
+.TransactionList .header .title {
+  color: #848484;
+  font-size: 1.4em;
+  padding-top: 1.1em;
+  display: inline-block;
+  padding-left: 1.1em;
+}
+
+.TransactionList .header .add {
+  color: #848484;
+  float: right;
+  font-size: 0.8em;
+  padding: 0.8rem;
+  margin-right: 1.8rem;
+  margin-top: 1.2rem;
+  background: #fff;
+}
