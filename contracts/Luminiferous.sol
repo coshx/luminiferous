@@ -10,7 +10,7 @@ contract Luminiferous {
   uint public credit_request;
   uint public borrower_balance;
   //uint public apr = 12; // percentage
-  uint public eth_second_per_interest = 3784320; // 12% APR. inverse of traditional "APR" to avoid division
+  uint public eth_second_per_interest = 2628000; // 12% APR. inverse of traditional "APR" to avoid division
 
   uint created_at;
   uint interest_updated_at;
