@@ -9,7 +9,8 @@ class Admin extends LumiComponent {
   constructor(props) {
     super(props);
 
-    this.state.borrowerAddress = '';
+    this.state.borrowerAddress = ''; //input field
+    this.state.borrower = 0;
     this.state.balance = 0;
     this.state.bank = 0;
     this.state.signed = false;
@@ -25,7 +26,7 @@ class Admin extends LumiComponent {
     var that = this;
     this.admintimer = setInterval(function(){
       that.updateStats();
-    },1000); // for demo
+    },100); // for demo
   }
 
   lumiInit() {
@@ -45,6 +46,10 @@ class Admin extends LumiComponent {
     this.state.lumi.getBank.call().then( (bank) => {
       var bankAddr = bank;
       that.setState({bank: bankAddr});
+    });
+    this.state.lumi.getBorrower.call().then( (borrower) => {
+      var b = borrower;
+      that.setState({borrower:b});
     });
     this.state.web3.eth.getBalance(that.state.lumibank.address, (err,bal) => {
       var ethBal = that.state.web3.fromWei(bal, 'ether').toNumber();
@@ -116,6 +121,7 @@ class Admin extends LumiComponent {
         <div className="admin">
           <h2>LumiBank Balance: {this.state.balance} ETH</h2>
           <h2>LumiBank Owner: {this.state.bank}</h2>
+          <h2>LumiBank Borrower: {this.state.borrower}</h2>
           <h2>Contract Signed: {this.state.signed}</h2>
         </div>
         <hr/>
