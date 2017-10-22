@@ -9,7 +9,6 @@ contract Luminiferous {
   uint public maximum_credit_limit;
   uint public credit_request;
   uint public borrower_balance;
-  //uint public apr = 12; // percentage
   uint public eth_second_per_interest = 262800000; // 12% APR. inverse of traditional "APR" to avoid division
 
   uint created_at;
@@ -107,7 +106,7 @@ contract Luminiferous {
   // Step 5. Lender pings the contract to compute interest on the loan
   function compute_interest() onlysigned external {
     //uint interest_period = block.timestamp - interest_updated_at; // in seconds
-    uint interest_period = 21 days;
+    uint interest_period = 30 days;
     borrower_balance = borrower_balance + (borrower_balance * interest_period / eth_second_per_interest); //overflow risk?
     interest_updated_at = block.timestamp;
   }

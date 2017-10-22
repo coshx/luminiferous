@@ -91,7 +91,7 @@ contract('Luminiferous', function(accounts) {
     }).then(function(){
       return lumi.getBorrowerBalance.call();
     }).then(function(bal){
-      assert.equal(1600,bal.toNumber());
+      assert.isAbove(bal.toNumber(),1600);
     });
   });
 
