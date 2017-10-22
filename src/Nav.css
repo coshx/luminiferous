@@ -5,6 +5,9 @@
   .hamburgerMenu {
     display: none;
   }
+  .navbar {
+    height: 100vh;
+  }
 }
 .hamburgerMenu {
   font-size: 3rem;
@@ -21,6 +24,8 @@
 
 .navbar a {
   color: #fff;
+  display: inline-block;
+  width: 100%;
 }
 
 .navbar a:active,
